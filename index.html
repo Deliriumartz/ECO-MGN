@@ -7,13 +7,11 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="css/leaflet.css">
-        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
         <style>
-        html, body, #map {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
+        #map {
+            width: 1316px;
+            height: 860px;
         }
         </style>
         <title></title>
@@ -34,66 +32,75 @@
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[53.3373262537,58.8047428522],[53.4807158527,59.1626570438]]);
+        }).fitBounds([[53.366880309584275,58.90715149714674],[53.42563299331152,59.05805092055602]]);
         var hash = new L.Hash(map);
-        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
-        var overlay_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            opacity: 1.0
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
         });
-        overlay_OSMStandard_0.addTo(map);
-        map.addLayer(overlay_OSMStandard_0);
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
         function pop__1(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['qgs_fid'] !== null ? Autolinker.link(String(feature.properties['qgs_fid'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['qgs_fid'] !== null ? autolinker.link(feature.properties['qgs_fid'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['latitude(широта)'] !== null ? Autolinker.link(String(feature.properties['latitude(широта)'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['latitude(широта)'] !== null ? autolinker.link(feature.properties['latitude(широта)'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['longitude(долгота)'] !== null ? Autolinker.link(String(feature.properties['longitude(долгота)'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['longitude(долгота)'] !== null ? autolinker.link(feature.properties['longitude(долгота)'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['Measurement_time'] !== null ? Autolinker.link(String(feature.properties['Measurement_time'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Measurement_time'] !== null ? autolinker.link(feature.properties['Measurement_time'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['time'] !== null ? Autolinker.link(String(feature.properties['time'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['time'] !== null ? autolinker.link(feature.properties['time'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['point'] !== null ? Autolinker.link(String(feature.properties['point'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['point'] !== null ? autolinker.link(feature.properties['point'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['location'] !== null ? Autolinker.link(String(feature.properties['location'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['location'] !== null ? autolinker.link(feature.properties['location'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['CO'] !== null ? Autolinker.link(String(feature.properties['CO'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['CO'] !== null ? autolinker.link(feature.properties['CO'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['NO2'] !== null ? Autolinker.link(String(feature.properties['NO2'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['NO2'] !== null ? autolinker.link(feature.properties['NO2'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['NO'] !== null ? Autolinker.link(String(feature.properties['NO'])) : '') + '</td>\
+                        <td colspan="2"><strong>NO</strong><br />' + (feature.properties['NO'] !== null ? autolinker.link(feature.properties['NO'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['SO2'] !== null ? Autolinker.link(String(feature.properties['SO2'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['SO2'] !== null ? autolinker.link(feature.properties['SO2'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['H2S'] !== null ? Autolinker.link(String(feature.properties['H2S'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['H2S'] !== null ? autolinker.link(feature.properties['H2S'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['RSH'] !== null ? Autolinker.link(String(feature.properties['RSH'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['RSH'] !== null ? autolinker.link(feature.properties['RSH'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['HF'] !== null ? Autolinker.link(String(feature.properties['HF'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['HF'] !== null ? autolinker.link(feature.properties['HF'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['CxHy'] !== null ? Autolinker.link(String(feature.properties['CxHy'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['CxHy'] !== null ? autolinker.link(feature.properties['CxHy'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
@@ -104,21 +111,25 @@
                 pane: 'pane__1',
                 radius: 4.0,
                 opacity: 1,
-                color: 'rgba(0,0,0,1.0)',
+                color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(148,81,52,1.0)',
+                fillColor: 'rgba(255,158,23,1.0)',
+                interactive: true,
             }
         }
         map.createPane('pane__1');
         map.getPane('pane__1').style.zIndex = 401;
         map.getPane('pane__1').style['mix-blend-mode'] = 'normal';
         var layer__1 = new L.geoJson(json__1, {
-            attribution: '<a href=""></a>',
+            attribution: '',
+            interactive: true,
+            dataVar: 'json__1',
+            layerName: 'layer__1',
             pane: 'pane__1',
             onEachFeature: pop__1,
             pointToLayer: function (feature, latlng) {
